@@ -11,7 +11,7 @@ RUN buildDeps="automake dpkg-dev gcc git libc6-dev libpcre++-dev libreadline-dev
     runDeps="gcc gosu libc6-dev" && \
     apt-get update && \
     apt-get install -y --no-install-recommends $buildDeps && \
-    ln -s profiles/default.cfg buildout.cfg && \
+    ln -s buildout_base.cfg buildout.cfg && \
     buildout && \
     find /opt/varnish -not -user varnish -exec chown varnish:varnish {} \+ && \
     apt-get purge -y --auto-remove $buildDeps && \
@@ -19,12 +19,12 @@ RUN buildDeps="automake dpkg-dev gcc git libc6-dev libpcre++-dev libreadline-dev
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /opt/varnish/buildout-cache/downloads/*
 
-EXPOSE 8318
+EXPOSE 6081
 
 HEALTHCHECK --interval=5s --timeout=5s --start-period=10s \
-  CMD nc -z -w5 127.0.0.1 8318 || exit 1
+  CMD nc -z -w5 127.0.0.1 6081 || exit 1
 
-ENTRYPOINT [ "gosu", "varnish" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "./bin/varnish-script", "-F" ]
+CMD [ "gosu", "varnish", "./bin/varnish-script", "-F" ]
 
