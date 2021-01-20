@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 RUN buildDeps="automake dpkg-dev gcc git libc6-dev libpcre++-dev libreadline-dev libtool pkg-config python-docutils" && \
-    runDeps="gosu" && \
+    runDeps="gcc gosu libc6-dev" && \
     apt-get update && \
     apt-get install -y --no-install-recommends $buildDeps && \
     ln -s profiles/default.cfg buildout.cfg && \
