@@ -1,0 +1,17 @@
+Dockerfile
+/.installed.cfg
+/.mr.developer.cfg
+/.Python
+/bin
+/buildout.cfg
+/develop-eggs
+/eggs
+/etc
+/include
+/lib
+/local
+/parts
+/pip-selfcheck.json
+/src
+/var
+/share
