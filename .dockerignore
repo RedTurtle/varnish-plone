@@ -1,5 +1,9 @@
+.dockerignore
+.gitignore
 Dockerfile
+README.md
 /.custom_built
+/.github/
 /.installed.cfg
 /.mr.developer.cfg
 /.Python

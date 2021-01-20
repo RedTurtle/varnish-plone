@@ -5,10 +5,10 @@ RUN useradd --system -m -d /varnish -U -u 500 varnish && \
 WORKDIR /opt/varnish
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY . .
+COPY scripts templates buildout_base.cfg ./
 
 RUN buildDeps="automake dpkg-dev gcc git libc6-dev libpcre++-dev libreadline-dev libtool pkg-config python-docutils" && \
-    runDeps="gcc gosu libc6-dev" && \
+    runDeps="gcc git gosu libc6-dev" && \
     apt-get update && \
     apt-get install -y --no-install-recommends $buildDeps && \
     ln -s buildout_base.cfg buildout.cfg && \
@@ -18,6 +18,8 @@ RUN buildDeps="automake dpkg-dev gcc git libc6-dev libpcre++-dev libreadline-dev
     apt-get install -y --no-install-recommends $runDeps && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /opt/varnish/buildout-cache/downloads/*
+
+COPY docker-initialize.py entrypoint.sh ./
 
 EXPOSE 6081
 
